@@ -1,40 +1,63 @@
 package lactuer4;
 
-public class CirculerQueue {
+public class DoubleQueue {
     private static int[] arr;
     private static int front, rear;
 
-    CirculerQueue(int size) {
-        front = 0;
-        rear = 0;
+    DoubleQueue(int size) {
+        front = -1;
+        rear = -1;
         arr = new int[size];
     }
 
-    void insert(int val) {
-        if(rear == -1){
+    void insertrear(int val) {
+        if (rear == front && front != -1) {
             System.out.println("the queue is full");
             return;
         }
+        if (rear == -1)
+            rear = 0;
         arr[rear] = val;
         rear = (rear + 1) % arr.length;
-        if(rear == front){
-            rear = -1;
-        }
     }
 
-    void delete() {
-        if(front == -1){
+    void insertfront(int val) {
+        if (front == rear && rear != -1) {
+            System.out.println("the queue is full");
+            return;
+        }
+        if (front == -1)
+            front = 0;
+        front = (front - 1 + arr.length) % arr.length;
+        arr[front] = val;
+    }
+
+    void deletefront() {
+        if (front == -1 && rear == -1) {
             System.out.println("the queue is empty");
             return;
         }
         front = (front + 1) % arr.length;
-        if(front == rear){
+        if (front == rear) {
+            front = -1;
+            rear = -1;
+        }
+    }
+
+    void deleterear() {
+        if (rear == -1 && front == -1) {
+            System.out.println("the queue is empty");
+            return;
+        }
+        rear = (rear - 1 + arr.length) % arr.length;
+        if (rear == front) {
+            rear = -1;
             front = -1;
         }
     }
 
     int start() {
-        if(front == -1){
+        if (rear == -1 && front == -1) {
             System.out.println("the queue is empty");
             return -1;
         }
@@ -42,49 +65,46 @@ public class CirculerQueue {
     }
 
     int end() {
-        if(front == -1){
+        if (rear == -1 && front == -1) {
             System.out.println("the queue is empty");
             return -1;
         }
-        if(rear == -1){
-            return arr[(front-1 + arr.length)% arr.length];
-        }
-        return arr[(rear-1 + arr.length)% arr.length];
+        return arr[(rear - 1 + arr.length) % arr.length];
     }
 
     public static void main(String[] args) {
-        CirculerQueue myqueue = new CirculerQueue(6);
+        DoubleQueue myqueue = new DoubleQueue(6);
 
-        myqueue.insert(1);
+        myqueue.insertfront(1);
         System.out.println("the value at front is " + myqueue.start());
 
-        myqueue.insert(2);
+        myqueue.insertrear(2);
         System.out.println("the value at front is " + myqueue.start());
 
-        myqueue.insert(3);
+        myqueue.insertfront(3);
         System.out.println("the value at front is " + myqueue.start());
 
-        myqueue.insert(4);
+        myqueue.insertrear(4);
         System.out.println("the value at front is " + myqueue.start());
 
-        myqueue.insert(5);
+        myqueue.insertfront(5);
         System.out.println("the value at front is " + myqueue.start());
 
         System.out.println("the value at rear is " + myqueue.end());
 
-        myqueue.delete();
+        myqueue.deleterear();
         System.out.println("the value at front is " + myqueue.start());
 
-        myqueue.delete();
+        myqueue.deletefront();
         System.out.println("the value at front is " + myqueue.start());
 
-        myqueue.delete();
+        myqueue.deleterear();
         System.out.println("the value at front is " + myqueue.start());
 
-        myqueue.delete();
+        myqueue.deletefront();
         System.out.println("the value at front is " + myqueue.start());
 
-        myqueue.delete();
+        myqueue.deleterear();
         System.out.println("the value at front is " + myqueue.start());
 
     }
