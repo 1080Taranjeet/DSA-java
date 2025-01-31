@@ -16,13 +16,19 @@ public class insertionSort {
     }
 
     static int[] Sort(int[] array){
+        //the main loop goes till the end of the array with i
         for(int i = 1; i < array.length ; i++){
+
+            //the second loop starts from first till the i
             for(int j = 0 ; j < i ; j++ ){
 
+                //if the i is smaller then the j 
                 if(array[j] > array[i]){
+
                     int data = array[j];
                     array[j] = array[i];
 
+                    //shift the values of the i and j 
                     while (j < i) {
                         j++;                        
                         int val = array[j];
